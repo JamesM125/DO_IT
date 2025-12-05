@@ -6,13 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mimi.do_it.Adapter.ToDoAdapter;
 import com.mimi.do_it.Model.ToDoModel;
 import com.mimi.do_it.Utils.DatabaseHandler;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements DialogCloseListener {
 
@@ -26,10 +27,10 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // hide action bar for clean look
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
 
         db = new DatabaseHandler(this);
         db.openDatabase();
@@ -41,14 +42,12 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         tasksAdapter = new ToDoAdapter(db, this);
         tasksRecyclerView.setAdapter(tasksAdapter);
 
-        ItemTouchHelper itemTouchHelper =
-                new ItemTouchHelper(new RecyclerItemTouchHelper(tasksAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksAdapter));
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
         refreshTaskList();
 
-        fab.setOnClickListener(v ->
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG));
+        fab.setOnClickListener(v -> AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG));
     }
 
     @Override

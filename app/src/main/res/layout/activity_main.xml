@@ -11,15 +11,16 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Tasks"
+        android:textStyle="bold"
         android:textColor="#000"
-        android:textSize="34sp"
-        android:textStyle="bold" />
+        android:textSize="34sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/taskText" />
+        android:layout_below="@id/taskText"
+        android:layout_marginTop="8dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.mimi.do_it.Adapter.ToDoAdapter;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
@@ -34,12 +36,10 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
         if (direction == ItemTouchHelper.LEFT) {
             new AlertDialog.Builder(adapter.getContext())
-                    .setTitle("Delete Task")
-                    .setMessage("Are you sure you want to delete this task?")
-                    .setPositiveButton("Delete",
-                            (dialog, which) -> adapter.deleteItem(position))
-                    .setNegativeButton("Cancel",
-                            (dialog, which) -> adapter.notifyItemChanged(position))
+                    .setTitle(R.string.delete_task_title)
+                    .setMessage(R.string.delete_task_message)
+                    .setPositiveButton(R.string.delete, (dialog, which) -> adapter.deleteItem(position))
+                    .setNegativeButton(R.string.cancel, (dialog, which) -> adapter.notifyItemChanged(position))
                     .create()
                     .show();
         } else {
@@ -66,28 +66,30 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
             background = new ColorDrawable(Color.RED);
         }
 
-        int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+        int iconMargin = (itemView.getHeight() - (icon != null ? icon.getIntrinsicHeight() : 0)) / 2;
 
         if (dX > 0) {
             int left = itemView.getLeft() + iconMargin;
-            int right = left + icon.getIntrinsicWidth();
-            icon.setBounds(left, itemView.getTop() + iconMargin, right,
-                    itemView.getTop() + iconMargin + icon.getIntrinsicHeight());
+            int right = left + (icon != null ? icon.getIntrinsicWidth() : 0);
+            if (icon != null)
+                icon.setBounds(left, itemView.getTop() + iconMargin, right,
+                        itemView.getTop() + iconMargin + icon.getIntrinsicHeight());
 
             background.setBounds(itemView.getLeft(), itemView.getTop(),
                     itemView.getLeft() + ((int) dX), itemView.getBottom());
 
         } else {
-            int left = itemView.getRight() - iconMargin - icon.getIntrinsicWidth();
+            int left = itemView.getRight() - iconMargin - (icon != null ? icon.getIntrinsicWidth() : 0);
             int right = itemView.getRight() - iconMargin;
-            icon.setBounds(left, itemView.getTop() + iconMargin, right,
-                    itemView.getTop() + iconMargin + icon.getIntrinsicHeight());
+            if (icon != null)
+                icon.setBounds(left, itemView.getTop() + iconMargin, right,
+                        itemView.getTop() + iconMargin + icon.getIntrinsicHeight());
 
             background.setBounds(itemView.getRight() + ((int) dX), itemView.getTop(),
                     itemView.getRight(), itemView.getBottom());
         }
 
         background.draw(c);
-        icon.draw(c);
+        if (icon != null) icon.draw(c);
     }
 }

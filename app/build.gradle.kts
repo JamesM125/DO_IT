@@ -40,4 +40,5 @@ dependencies {
         implementation("androidx.constraintlayout:constraintlayout:2.2.1")
 
         implementation("androidx.recyclerview:recyclerview:1.4.0")
+        implementation("androidx.cardview:cardview:1.0.0")
 }

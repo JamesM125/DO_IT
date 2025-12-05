@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-        <item name="colorPrimary">@android:color/holo_green_dark</item>
-        <item name="colorPrimaryDark">@android:color/holo_green_dark</item>
-        <item name="colorAccent">@android:color/white</item>
+    <!-- Base theme for the app -->
+    <style name="Theme.Do_It" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/green_dark</item>
+        <item name="colorPrimaryVariant">@color/green_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">@color/green_dark</item>
+
+        <!-- Window background -->
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
-    <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
+    <!-- Final theme -->
 
 
 </resources>
