@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- MAIN TITLE -->
     <TextView
         android:id="@+id/taskText"
         android:layout_width="wrap_content"
@@ -15,13 +16,28 @@
         android:textColor="#000"
         android:textSize="34sp" />
 
+    <!-- OPTIONAL due date display -->
+    <TextView
+        android:id="@+id/dueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Select Due Date"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:background="@drawable/rounded_bg" />
+
+    <!-- TASK LIST -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/taskText"
-        android:layout_marginTop="8dp"/>
+        android:layout_below="@id/dueDate"
+        android:layout_marginTop="8dp" />
 
+    <!-- MAIN FAB: Add Task -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -31,5 +47,29 @@
         android:layout_margin="24dp"
         android:backgroundTint="#006400"
         android:src="@drawable/baseline_add_24" />
+
+    <!-- ADD TASK WITH REMINDER FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="90dp"
+        android:backgroundTint="#008080"
+        android:src="@drawable/ic_notifications" />
+
+    <!-- OPEN CALENDAR FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="160dp"
+        android:backgroundTint="#0044AA"
+        android:src="@drawable/ic_calendar" />
 
 </RelativeLayout>

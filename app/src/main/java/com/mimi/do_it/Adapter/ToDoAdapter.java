@@ -1,12 +1,15 @@
 package com.mimi.do_it.Adapter;
 
 import android.content.Context;
+
+import android.app.Activity;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +19,7 @@ import com.mimi.do_it.MainActivity;
 import com.mimi.do_it.Model.ToDoModel;
 import com.mimi.do_it.R;
 import com.mimi.do_it.Utils.DatabaseHandler;
+import com.mimi.do_it.Utils.Utils;
 
 import java.util.List;
 
@@ -42,42 +46,27 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final ToDoModel item = todoList.get(position);
 
-        // 1. Remove previous listener to avoid recursion during recycling
+        // Avoid triggering listener during bind
         holder.taskCheckBox.setOnCheckedChangeListener(null);
-
-        // 2. Set the checkbox text and checked state
         holder.taskCheckBox.setText(item.getTask());
+        holder.taskCheckBox.setChecked(item.getStatus() == 1);
 
-
-        // 3. Set drawable based on checked state
-        if (item.getStatus() == 1) {
-            AnimatedVectorDrawable anim = (AnimatedVectorDrawable)
-                    holder.taskCheckBox.getContext().getDrawable(R.drawable.anim_checkbox_check);
-            holder.taskCheckBox.setButtonDrawable(anim);
-            anim.start();
-            holder.taskCheckBox.setChecked(true);
-        } else
-        {
-            holder.taskCheckBox.setButtonDrawable(R.drawable.ic_checkbox_unchecked);
-            holder.taskCheckBox.setChecked(false);
+        // Display due date if available
+        if (item.getDueDateMillis() > 0) {
+            holder.dueDateText.setVisibility(View.VISIBLE);
+            holder.dueDateText.setText(Utils.formatDateTime(item.getDueDateMillis(), activity));
+        } else {
+            holder.dueDateText.setVisibility(View.GONE);
         }
 
-        // 4. Set listener for user interaction
+        // Checkbox listener
         holder.taskCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Update database status
             db.updateStatus(item.getId(), isChecked ? 1 : 0);
 
-            // Animate checkmark if checked
+            // Animate checkbox when checked
             if (isChecked) {
                 holder.taskCheckBox.setButtonDrawable(R.drawable.anim_checkbox_check);
                 AnimatedVectorDrawable anim = (AnimatedVectorDrawable) holder.taskCheckBox.getButtonDrawable();
-                if (anim != null) anim.start();
-            } else {
-                holder.taskCheckBox.setButtonDrawable(R.drawable.ic_checkbox_unchecked);
-            } if (isChecked) {
-                AnimatedVectorDrawable anim = (AnimatedVectorDrawable)
-                        holder.taskCheckBox.getContext().getDrawable(R.drawable.anim_checkbox_check);
-                holder.taskCheckBox.setButtonDrawable(anim);
                 anim.start();
             } else {
                 holder.taskCheckBox.setButtonDrawable(R.drawable.ic_checkbox_unchecked);
@@ -87,7 +76,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return todoList == null ? 0 : todoList.size();
+        return todoList != null ? todoList.size() : 0;
     }
 
     public void setTasks(List<ToDoModel> todoList) {
@@ -120,10 +109,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox taskCheckBox;
+        TextView dueDateText;
+        TextView taskDueDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             taskCheckBox = itemView.findViewById(R.id.todoCheckBox);
+            dueDateText = itemView.findViewById(R.id.taskDueDate);
         }
     }
 }

@@ -1,23 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="4dp">
+    android:layout_margin="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:elevation="4dp"
+    android:padding="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:layout_height="wrap_content">
 
+        <!-- Task CheckBox -->
         <CheckBox
             android:id="@+id/todoCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Task Name -->
+        <TextView
+            android:id="@+id/taskText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/todoCheckBox"
+            android:layout_alignTop="@id/todoCheckBox"
+            android:layout_marginStart="8dp"
             android:text="Sample Task"
-            android:buttonTint="#006400"/>
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:ellipsize="end"
+            android:maxLines="2" />
+
+        <!-- Task Due Date -->
+        <TextView
+            android:id="@+id/taskDueDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/taskText"
+            android:layout_toEndOf="@id/todoCheckBox"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Due: 12/12/2025 09:00"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray" />
 
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>

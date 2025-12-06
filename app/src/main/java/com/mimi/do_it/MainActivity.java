@@ -2,6 +2,7 @@ package com.mimi.do_it;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,10 +28,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // hide action bar for clean look
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
 
         db = new DatabaseHandler(this);
         db.openDatabase();
@@ -47,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         refreshTaskList();
 
-        fab.setOnClickListener(v -> AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG));
+        fab.setOnClickListener(v -> AddNewTask.newInstance()
+                .show(getSupportFragmentManager(), AddNewTask.TAG));
     }
 
     @Override
